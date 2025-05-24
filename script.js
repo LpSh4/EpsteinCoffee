@@ -3,7 +3,6 @@
     { id: 'latte', name: 'Латте', description: 'Мягкий кофе с молочной пеной и легкой сладостью.', price: 185, image: 'content/images/latte.jpg' },
     { id: 'cappuccino', name: 'Капучино', description: 'Баланс кофе, молока и пены — классика кофейной культуры.', price: 160, image: 'content/images/cappuccino.jpg' },
     { id: 'mocha', name: 'Мокко', description: 'Кофе с шоколадным сиропом и взбитыми сливками.', price: 190, image: 'content/images/mocha.jpg' },
-    { id: 'americano', name: 'Американо', description: 'Яркий, но мягкий кофе на основе эспрессо и горячей воды.', price: 130, image: 'content/images/americano.jpg' },
     { id: 'ristretto', name: 'Ристретто', description: 'Очень концентрированный эспрессо с ярким вкусом.', price: 130, image: 'content/images/ristretto.jpg' },
     { id: 'flatwhite', name: 'Флэт Уайт', description: 'Кофе с бархатистой молочной пеной — идеален для любителей мягких вкусов.', price: 180, image: 'content/images/flatwhite.jpg' },
     { id: 'matchatea', name: 'Чай Матча', description: 'Японский зелёный чай в порошке, богатый антиоксидантами.', price: 210, image: 'content/images/motcha.jpg' },
