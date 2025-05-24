@@ -4,7 +4,7 @@
         { "src": "public/**/*", "use": "@vercel/static" }
     ],
     "routes": [
-        { "src": "/api/(.*)", "dest": "https://epsteincoffee.onrender.com/api/menu" },
+        { "src": "/api/(.*)", "dest": "https://epsteincoffee.onrender.com/api/$1" },
         { "src": "/(.*)", "dest": "/public/index.html" }
     ]
 }
