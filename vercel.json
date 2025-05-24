@@ -1,0 +1,11 @@
+// vercel.json
+{
+    "version": 2,
+    "builds": [
+        { "src": "public/**/*", "use": "@vercel/static" }
+    ],
+    "routes": [
+        { "src": "/api/(.*)", "dest": "https://epsteincoffee.onrender.com" },
+        { "src": "/(.*)", "dest": "/public/index.html" }
+    ]
+}

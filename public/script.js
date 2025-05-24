@@ -22,6 +22,8 @@ const addons = {
     nonLactoseCream: { name: 'Безлактозные сливки', price: 85 }
 };
 
+//mongodb+srv://44thdid911:80563736@cluster0.pociwce.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+
 // as { variationId: { itemId, qty, addons } }
 let cart = {};
 let lastOrder = null;
