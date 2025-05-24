@@ -130,9 +130,7 @@ function renderMenu(menuItems) {
             });
         });
     });
-
     window.getItemAddonStates = () => itemAddonStates;
-}
     menuItemsCut.forEach(item => {
         const selectedAddons = document.querySelector(`.menu__item-selected-addons[data-id="${item.id}"]`);
         const addonButtons = document.querySelectorAll(`.menu__btn-addon[data-id="${item.id}"]`);
@@ -150,6 +148,7 @@ function renderMenu(menuItems) {
             });
         });
     });
+}
 
 function generateRandomSequence() {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
