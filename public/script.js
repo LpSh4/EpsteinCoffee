@@ -26,8 +26,6 @@ async function fetchMenu() {
         return [];
     }
 }
-const menuItems = fetchMenu()
-
 
 const addons = {
     chocolateSyrup: { name: 'Шоколадный сироп', price: 85 },
