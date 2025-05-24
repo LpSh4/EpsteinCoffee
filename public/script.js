@@ -1,20 +1,31 @@
- const menuItems = [
-    { id: 'espresso', name: 'Эспрессо', description: 'Крепкий и насыщенный классический эспрессо.', price: 120, image: 'content/images/espresso.jpg' },
-    { id: 'latte', name: 'Латте', description: 'Мягкий кофе с молочной пеной и легкой сладостью.', price: 185, image: 'content/images/latte.jpg' },
-    { id: 'cappuccino', name: 'Капучино', description: 'Баланс кофе, молока и пены — классика кофейной культуры.', price: 160, image: 'content/images/cappuccino.jpg' },
-    { id: 'mocha', name: 'Мокко', description: 'Кофе с шоколадным сиропом и взбитыми сливками.', price: 190, image: 'content/images/mocha.jpg' },
-    { id: 'americano', name: 'Американо', description: 'Яркий, но мягкий кофе на основе эспрессо и горячей воды.', price: 130, image: 'content/images/americano.jpg' },
-    { id: 'ristretto', name: 'Ристретто', description: 'Очень концентрированный эспрессо с ярким вкусом.', price: 130, image: 'content/images/ristretto.jpg' },
-    { id: 'flatwhite', name: 'Флэт Уайт', description: 'Кофе с бархатистой молочной пеной — идеален для любителей мягких вкусов.', price: 180, image: 'content/images/flatwhite.jpg' },
-    { id: 'matchatea', name: 'Чай Матча', description: 'Японский зелёный чай в порошке, богатый антиоксидантами.', price: 210, image: 'content/images/motcha.jpg' },
-    { id: 'glace', name: 'Глясе', description: 'Холодный кофе с мороженым и шоколадным сиропом.', price: 200, image: 'content/images/glace.jpg' },
-    { id: 'brownie', name: 'Брауни с орео', description: 'Насыщенный шоколадный рецепт с хрустящей начинкой.', price: 100, image: 'content/images/brownie.jpg' },
-    { id: 'pancakes', name: 'Панкейки с матча', description: 'Мягкие блинчики с зелёным акцентом.', price: 150, image: 'content/images/pancakes.jpg' },
-    { id: 'croissant', name: 'Круассан с нутеллой', description: 'Французская классика с ореховой пастой.', price: 120, image: 'content/images/croissant.jpg' },
-    { id: 'macaron', name: 'Макарон', description: 'Легкие, воздушные, яркие.', price: 90, image: 'content/images/macaron.jpg' },
-    { id: 'donut', name: 'Боба-чай донат', description: 'Пончик с начинкой из боба.', price: 200, image: 'content/images/donut.jpg' },
-    { id: 'eclair', name: 'Фисташковый эклер', description: 'Кремовый взрыв вкуса.', price: 250, image: 'content/images/eclair.jpg' }
-];
+// const menuItems = [
+//    { id: 'espresso', name: 'Эспрессо', description: 'Крепкий и насыщенный классический эспрессо.', price: 120, image: 'content/images/espresso.jpg' },
+//    { id: 'latte', name: 'Латте', description: 'Мягкий кофе с молочной пеной и легкой сладостью.', price: 185, image: 'content/images/latte.jpg' },
+//    { id: 'cappuccino', name: 'Капучино', description: 'Баланс кофе, молока и пены — классика кофейной культуры.', price: 160, image: 'content/images/cappuccino.jpg' },
+//    { id: 'mocha', name: 'Мокко', description: 'Кофе с шоколадным сиропом и взбитыми сливками.', price: 190, image: 'content/images/mocha.jpg' },
+//    { id: 'americano', name: 'Американо', description: 'Яркий, но мягкий кофе на основе эспрессо и горячей воды.', price: 130, image: 'content/images/americano.jpg' },
+//    { id: 'ristretto', name: 'Ристретто', description: 'Очень концентрированный эспрессо с ярким вкусом.', price: 130, image: 'content/images/ristretto.jpg' },
+//    { id: 'flatwhite', name: 'Флэт Уайт', description: 'Кофе с бархатистой молочной пеной — идеален для любителей мягких вкусов.', price: 180, image: 'content/images/flatwhite.jpg' },
+//    { id: 'matchatea', name: 'Чай Матча', description: 'Японский зелёный чай в порошке, богатый антиоксидантами.', price: 210, image: 'content/images/motcha.jpg' },
+//    { id: 'glace', name: 'Глясе', description: 'Холодный кофе с мороженым и шоколадным сиропом.', price: 200, image: 'content/images/glace.jpg' },
+//    { id: 'brownie', name: 'Брауни с орео', description: 'Насыщенный шоколадный рецепт с хрустящей начинкой.', price: 100, image: 'content/images/brownie.jpg' },
+//    { id: 'pancakes', name: 'Панкейки с матча', description: 'Мягкие блинчики с зелёным акцентом.', price: 150, image: 'content/images/pancakes.jpg' },
+//    { id: 'croissant', name: 'Круассан с нутеллой', description: 'Французская классика с ореховой пастой.', price: 120, image: 'content/images/croissant.jpg' },
+//    { id: 'macaron', name: 'Макарон', description: 'Легкие, воздушные, яркие.', price: 90, image: 'content/images/macaron.jpg' },
+//    { id: 'donut', name: 'Боба-чай донат', description: 'Пончик с начинкой из боба.', price: 200, image: 'content/images/donut.jpg' },
+//    { id: 'eclair', name: 'Фисташковый эклер', description: 'Кремовый взрыв вкуса.', price: 250, image: 'content/images/eclair.jpg' }
+//];
+
+async function fetchMenu() {
+    try {
+        const response = await fetch('/api/menu');
+        if (!response.ok) throw new Error('Failed to fetch menu');
+        return await response.json();
+    } catch (error) {
+        console.error('Error fetching menu:', error);
+        return [];
+    }
+}
 
 const addons = {
     chocolateSyrup: { name: 'Шоколадный сироп', price: 85 },
