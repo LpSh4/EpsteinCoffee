@@ -61,6 +61,7 @@ function generateVariationId(itemId, addons) {
 }
 
 function renderMenu(menuItems) {
+    if (!Array.isArray(menuItems)) menuItems = [];
     const menuItemsCut = menuItems.slice(0, 9);
     menuList.innerHTML = '';
     snackList.innerHTML = '';
