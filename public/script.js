@@ -61,7 +61,7 @@ function generateVariationId(itemId, addons) {
     return `${itemId}_${addonKeys || 'no-addons'}`;
 }
 
-function renderMenu() {
+function renderMenu(menuItems) {
     menuList.innerHTML = '';
     snackList.innerHTML = '';
     const itemAddonStates = {};
