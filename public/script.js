@@ -54,7 +54,6 @@ const paymentText = document.getElementById('payment-text');
 const paymentSequence = document.getElementById('payment-sequence');
 const paymentTotal = document.getElementById('payment-total');
 const paymentItems = document.getElementById('payment-items');
-const menuItemsCut = menuItems.slice(0, 9);
 
 function generateVariationId(itemId, addons) {
     const addonKeys = Object.keys(addons).filter(k => addons[k]).sort().join(',');
@@ -62,6 +61,7 @@ function generateVariationId(itemId, addons) {
 }
 
 function renderMenu(menuItems) {
+    const menuItemsCut = menuItems.slice(0, 9);
     menuList.innerHTML = '';
     snackList.innerHTML = '';
     const itemAddonStates = {};
@@ -72,6 +72,7 @@ function renderMenu(menuItems) {
     });
 
     menuItemsCut.forEach(item => {
+        
         const article = document.createElement('article');
         article.className = 'menu__item';
         article.innerHTML = `
