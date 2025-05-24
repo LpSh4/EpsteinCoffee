@@ -18,7 +18,7 @@
 
 async function fetchMenu() {
     try {
-        const response = await fetch('api/menu');
+        const response = await fetch('https://epsteincoffee.onrender.com/api/menu');
         if (!response.ok) throw new Error('Failed to fetch menu');
         return await response.json();
     } catch (error) {
