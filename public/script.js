@@ -18,7 +18,7 @@
 
 async function fetchMenu() {
     try {
-        const response = await fetch('https://epsteincoffee.onrender.com/api/menu');
+        const response = await fetch('api/menu');
         if (!response.ok) throw new Error('Failed to fetch menu');
         return await response.json();
     } catch (error) {
@@ -62,7 +62,6 @@ function generateVariationId(itemId, addons) {
 }
 
 function renderMenu(menuItems) {
-    if (!Array.isArray(menuItems)) menuItems = [];
     const menuItemsCut = menuItems.slice(0, 9);
     menuList.innerHTML = '';
     snackList.innerHTML = '';
