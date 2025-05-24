@@ -11,30 +11,22 @@ const dbName = 'coffeeShop';
 
 app.get('/api/menu', async (req, res) => {
     try {
+        console.log('Attempting to connect to MongoDB with URI:', process.env.MONGODB_URI);
         await client.connect();
+        console.log('Connected to database:', dbName);
         const db = client.db(dbName);
         const menu = await db.collection('menu').find().toArray();
+        console.log('Fetched menu items:', menu);
+        if (!menu) throw new Error('No menu data found');
         res.json(menu);
     } catch (error) {
-        res.status(500).json({ error: 'Failed to fetch menu' });
+        console.error('Menu fetch error:', error);
+        res.status(500).json({ error: 'Failed to fetch menu', details: error.message });
     } finally {
         await client.close();
     }
 });
 
-app.post('/api/orders', async (req, res) => {
-    const { userId, items } = req.body;
-    if (!userId || !items) return res.status(400).json({ error: 'Missing userId or items' });
-    try {
-        await client.connect();
-        const db = client.db(dbName);
-        await db.collection('orders').insertOne({ userId, items, date: new Date() });
-        res.status(201).json({ message: 'Order placed' });
-    } catch (error) {
-        res.status(500).json({ error: 'Failed to save order' });
-    } finally {
-        await client.close();
-    }
-});
-
-app.listen(3000, () => console.log('Server running on port 3000'));
+// Use PORT from environment variable, fallback to 3000 for local dev
+const port = process.env.PORT || 3000;
+app.listen(port, () => console.log(`Server running on port ${port}`));
