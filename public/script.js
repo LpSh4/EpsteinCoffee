@@ -26,6 +26,8 @@ async function fetchMenu() {
         return [];
     }
 }
+const menuItems = fetchMenu()
+
 
 const addons = {
     chocolateSyrup: { name: 'Шоколадный сироп', price: 85 },
@@ -428,16 +430,48 @@ function handleCartListClick(e) {
     renderCart();
 }
 
-function init() {
+async function submitOrder() {
+    const userId = localStorage.getItem('userId') || 'guest';
+    const items = Object.keys(cart).map(variationId => ({
+        variationId,
+        ...cart[variationId],
+    }));
+    try {
+        const response = await fetch('/api/orders', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ userId, items }),
+        });
+        if (response.ok) {
+            cart = {};
+            saveCart();
+            updateCartBadge();
+            renderCart();
+        }
+    } catch (error) {
+        console.error('Error submitting order:', error);
+    }
+}
+
+async function init() {
     loadCart();
     updateCartBadge();
-    renderMenu();
-    menuList.addEventListener('click', handleMenuButtonClick);
-    snackList.addEventListener('click', handleMenuButtonClick);
+    const menuItems = await fetchMenu();
+    renderMenu(menuItems);
+    menuList.addEventListener('click', (e) => handleMenuButtonClick(e, menuItems));
+    snackList.addEventListener('click', (e) => handleMenuButtonClick(e, menuItems));
     cartIcon.addEventListener('click', handleCartIconClick);
-    cartOrderBtn.addEventListener('click', handleCartOrderClick);
+    cartOrderBtn.addEventListener('click', () => {
+        if (Object.keys(cart).length === 0) {
+            setActiveSection('menu');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            cartOrderBtn.innerHTML = `Просмотреть меню`;
+            return;
+        }
+        submitOrder();
+    });
     document.getElementById('payment-back-btn').addEventListener('click', handlePaymentBackClick);
-    cartList.addEventListener('click', handleCartListClick);
+    cartList.addEventListener('click', (e) => handleCartListClick(e, menuItems));
     document.querySelector('.nav__list').addEventListener('click', e => {
         const link = e.target.closest('.nav__link');
         if (link) {
@@ -451,5 +485,4 @@ function init() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 }
-
 window.onload = init;
