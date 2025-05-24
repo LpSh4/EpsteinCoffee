@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>CoffeeLike</title>
+<link href="fonts.css" rel="stylesheet" />
+<link href="style.css" rel="stylesheet" />
+<style src="style.css"></style>
+</head>
+<body>
+
+<header class="header" role="banner">
+  <div class="header__container">
+    <div class="header__logo">CoffeeLike</div>
+    <nav class="nav" role="navigation" aria-label="Основное меню сайта">
+      <ul class="nav__list">
+        <li class="nav__item"><a href="#" class="nav__link nav__link--active" data-target="home">Главная</a></li>
+        <li class="nav__item"><a href="#" class="nav__link" data-target="menu">Меню</a></li>
+        <li class="nav__item"><a href="#" class="nav__link" data-target="about">О нас</a></li>
+        <li class="nav__item"><a href="#" class="nav__link" data-target="contacts">Контакты</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<div class="cart-icon" title="Корзина" aria-label="Открыть корзину" tabindex="0" role="button">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false">
+    <path d="M7 18c-1.104 0-1.99.896-1.99 2S5.896 22 7 22s2-.896 2-2-.896-2-2-2zm10 0c-1.104 0-1.99.896-1.99 2s.886 2 1.99 2 2-.896 2-2-.896-2-2-2zM7.324 12h9.351l1.457-6H6.556l.768 6zM6 4h2l3 8 1.5-4h4l.99-2H6z"/>
+  </svg>
+  <span class="cart-badge" id="cart-count" style="display:none;">0</span>
+</div>
+
+<main class="container" role="main">
+
+  <section id="home" class="page-section home page-section--active" aria-label="Главная страница">
+    <h1 class="home__title">CoffeeLike</h1>
+    <p class="home__subtitle">Настоящий вкус кофе. Уютная атмосфера для пользования макбукее.</p>
+    <button class="button button--primary" id="btn-look-menu" data-target="menu" aria-controls="menu">Посмотреть меню</button>
+  </section>
+
+  <section id="menu" class="page-section menu" aria-label="Меню кофейни">
+    <h2 class="menu__title">Наше меню</h2>
+    <div class="menu__list" id="menu-list"></div>
+    <h2 class="menu__title">Снеки</h2>
+    <div class="menu__list" id="snack-list"></div>
+  </section>
+
+  <section id="cart" class="page-section cart" aria-label="Корзина" tabindex="0">
+    <h2 class="cart__title">Корзина</h2>
+    <ul class="cart__list" id="cart-list"></ul>
+    <p class="cart__empty" id="cart-empty">Ваша корзина пуста</p>
+    <button class="cart__btn-order button--primary button" id="cart-order-btn" aria-label="Перейти к оплате"></button>
+  </section>
+
+  <section id="payment" class="page-section payment" aria-label="Оплата" aria-live="polite">
+    <h2 class="payment__title">Оплата заказа</h2>
+    <p class = payment__sequence id="payment-sequence">Выбор номера...</p>
+    <p class="payment__text" id="payment-text">Подсчет заказа...</p>
+    <p class="payment__total" id="payment-total">Итого: 0 ₽</p>
+    <div class="payment__items" id="payment-items"></div>
+    <button class="payment__btn-back" id="payment-back-btn" aria-label="Вернуться к меню">Вернуться</button>
+  </section>
+
+  <section id="about" class="page-section about" aria-label="О кофейне">
+    <h2 class="about__title">Про нашу кофейню</h2>
+    <p class="about__text">
+      CoffeeLike — это не просто кафе, а респавн для кофемейтов. Тут кайфуют все, кто шарит за качественный кофе. Мы отбираем зерна так, чтобы ваш напиток был чистый вин, а не кринж. Ловите вайб, расслабьтесь и закиньтесь кофеином, как настоящий босс.
+    </p>
+    <p class="about__text">
+      Наши бариста не просто варят кофе, а кастуют настоящие кофейные ульты. Они проходят буст на каждом этапе, чтобы ваш заказ был имбой. В меню — олды как эспрессо и хайповые авторские миксы, которые не найдешь в обычных кофейнях.
+    </p>
+    <p class="about__text">
+      В придачу к кофе — топовая выпечка и легкие снеки для тех, кто любит похрустеть. Залетайте в CoffeeLike, если хотите прочувствовать атмосферу чила и закинуть бодрости на фулл. Не теряйтесь, мы всегда на связи и готовы поддержать ваш энергетический хай.
+    </p>
+  </section>
+
+  <section id="contacts" class="page-section contacts" aria-label="Контактная информация">
+    <h2 class="contacts__title">Контактная информация</h2>
+    <div class="contacts__info">
+      <p class="contacts__text"><strong>Адрес:</strong> Нижний Новгород, ул. Гвардейцев, д. 11, кв. 4</p>
+      <p class="contacts__text"><strong>Телефон:</strong> +7 (915) 502-51-71</p>
+      <p class="contacts__text"><strong>Электронная почта:</strong> jeffrey-epstein-85@gmail.com</p>
+      <p class="contacts__text"><strong>Время работы:</strong> Пн-Вс: 08:00 - 20:00</p>
+    </div>
+  </section>
+</main>
+
+<footer class="footer" role="contentinfo">
+  © 1985 Linux sqd. Все секреты защищены.
+</footer>
+
+<script src="script.js">
+</script>
+
+</body>
+</html>
