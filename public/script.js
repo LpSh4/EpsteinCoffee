@@ -1,5 +1,6 @@
 // Global variable to store menu items
 let menuItems = [];
+let addons = [];
 
 async function fetchMenu() {
     try {

@@ -27,6 +27,24 @@ app.get('/api/menu', async (req, res) => {
     }
 });
 
+app.get('/api/addons', async (req, res) => {
+    try {
+        console.log('Attempting to connect to MongoDB for addons with URI:', process.env.MONGODB_URI);
+        await client.connect();
+        console.log('Connected to database:', dbName);
+        const db = client.db(dbName);
+        const addons = await db.collection('addons').find().toArray();
+        console.log('Fetched addons:', addons);
+        if (!addons) throw new Error('No addons data found');
+        res.json(addons);
+    } catch (error) {
+        console.error('Addons fetch error:', error);
+        res.status(500).json({ error: 'Failed to fetch addons', details: error.message });
+    } finally {
+        await client.close();
+    }
+});
+
 // Use PORT from environment variable, fallback to 3000 for local dev
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Server running on port ${port}`));
