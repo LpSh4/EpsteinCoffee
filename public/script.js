@@ -198,20 +198,6 @@ function renderCart() {
         `;
 
         li.querySelectorAll('.qty-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                if (btn.classList.contains('increment')) {
-                    cart[variationId].qty += 1;
-                } else if (btn.classList.contains('decrement')) {
-                    if (cart[variationId].qty > 1) {
-                        cart[variationId].qty -= 1;
-                    } else {
-                        delete cart[variationId];
-                    }
-                }
-                saveCart();
-                updateCartBadge();
-                renderCart();
-            });
             btn.addEventListener('keypress', e => {
                 if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
