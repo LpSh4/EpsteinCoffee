@@ -1,6 +1,8 @@
 // Global variable to store menu items
 let menuItems = [];
 let addons = [];
+let addonsObj = [];
+
 
 async function fetchMenu() {
     try {
@@ -15,6 +17,26 @@ async function fetchMenu() {
         return [];
     }
 }
+
+async function fetchAddons(){
+    try {
+        const responce = await fetch('https://epsteincoffee.onrender.com/api/addons');
+        if (!responce.ok) throw new Error('Failed to fetch menu');
+        const data = await responce.json();
+        addons = Array.isArray(data) ? data : []
+        addonsObj = Object.fromEntries(
+        addons.map(a => [a.id, { name: a.name, price: a.price }])
+        );
+
+        console.log(addons)
+        return addons
+    } catch (error) {
+        console.error('Error fetching addons: ', error);
+        addons = [];
+        return []
+    }
+}
+
 
 let cart = {};
 let lastOrder = null;
@@ -48,30 +70,44 @@ function renderMenu() {
     const itemAddonStates = {};
     menuItemsCut.forEach(item => {
         if (!itemAddonStates[item.id]) {
-            itemAddonStates[item.id] = { chocolateSyrup: false, pistachioMilk: false, nonLactoseCream: false, pineappleSyrup: false };
+            itemAddonStates[item.id] = addons.reduce((acc, addon) => {
+              acc[addon.id] = false;
+              return acc;
+            }, {});;
         }
     });
 
     menuItemsCut.forEach(item => {
-        const article = document.createElement('article');
-        article.className = 'menu__item';
-        article.innerHTML = `
-            <img src="${item.image}" alt="${item.name}" class="menu__img" />
-            <h3 class="menu__item-title">${item.name}</h3>
-            <p class="menu__item-description">${item.description}</p>
-            <div class="menu__item-price">${item.price} ₽</div>
-            <div class="menu__item-buttons">
-                <button class="menu__btn-order" data-id="${item.id}" aria-label="Заказать ${item.name}">Заказать</button>
-                <button class="menu__btn-cart" data-id="${item.id}" aria-label="Добавить ${item.name} в корзину">В корзину</button>
-                <button class="menu__btn-addon" data-id="${item.id}" data-addon="chocolateSyrup" aria-label="Добавить ${addons.chocolateSyrup.name} к ${item.name}">+ ${addons.chocolateSyrup.name}</button>
-                <button class="menu__btn-addon" data-id="${item.id}" data-addon="pistachioMilk" aria-label="Добавить ${addons.pistachioMilk.name} к ${item.name}">+ ${addons.pistachioMilk.name}</button>
-                <button class="menu__btn-addon" data-id="${item.id}" data-addon="nonLactoseCream" aria-label="Добавить ${addons.nonLactoseCream.name} к ${item.name}">+ ${addons.nonLactoseCream.name}</button>
-                <button class="menu__btn-addon" data-id="${item.id}" data-addon="pineappleSyrup" aria-label="Добавить ${addons.pineappleSyrup.name} к ${item.name}">+ ${addons.pineappleSyrup.name}</button>
-            </div>
-            <div class="menu__item-selected-addons" data-id="${item.id}"></div>
+    const article = document.createElement('article');
+    article.className = 'menu__item';
+
+    const addonselection = addons.map(addon => {
+        return `
+            <button class="menu__btn-addon" 
+                data-id="${item.id}" 
+                data-addon="${addon.id}" 
+                aria-label="Добавить ${addon.name} к ${item.name}">
+                + ${addon.name}
+            </button>
         `;
-        menuList.appendChild(article);
-    });
+    }).join(''); // turn array into a single string
+
+    article.innerHTML = `
+        <img src="${item.image}" alt="${item.name}" class="menu__img" />
+        <h3 class="menu__item-title">${item.name}</h3>
+        <p class="menu__item-description">${item.description}</p>
+        <div class="menu__item-price">${item.price} ₽</div>
+        <div class="menu__item-buttons">
+            <button class="menu__btn-order" data-id="${item.id}" aria-label="Заказать ${item.name}">Заказать</button>
+            <button class="menu__btn-cart" data-id="${item.id}" aria-label="Добавить ${item.name} в корзину">В корзину</button>
+            ${addonselection}
+        </div>
+    `;
+
+    // Append article to container (make sure you have a container like menuContainer)
+    menuList.appendChild(article);
+});
+
 
     menuItems.filter(item => !menuItemsCut.includes(item)).forEach(item => {
         const article = document.createElement('article');
@@ -90,18 +126,14 @@ function renderMenu() {
     });
 
     menuItemsCut.forEach(item => {
-        const selectedAddons = document.querySelector(`.menu__item-selected-addons[data-id="${item.id}"]`);
         const addonButtons = document.querySelectorAll(`.menu__btn-addon[data-id="${item.id}"]`);
         addonButtons.forEach(btn => {
             btn.classList.toggle('menu__btn-addon--active', itemAddonStates[item.id][btn.dataset.addon]);
             btn.addEventListener('click', () => {
                 const addon = btn.dataset.addon;
+                console.log(addon)
                 itemAddonStates[item.id][addon] = !itemAddonStates[item.id][addon];
                 btn.classList.toggle('menu__btn-addon--active', itemAddonStates[item.id][addon]);
-                const addonNames = Object.keys(itemAddonStates[item.id])
-                    .filter(k => itemAddonStates[item.id][k])
-                    .map(k => addons[k].name);
-                selectedAddons.textContent = addonNames.length ? `Выбрано: ${addonNames.join(', ')}` : '';
             });
         });
     });
@@ -168,11 +200,11 @@ function renderCart() {
 
         const addonNames = Object.keys(itemAddons)
             .filter(addon => itemAddons[addon])
-            .map(addon => addons[addon]?.name || addon);
+            .map(addon => addonsObj[addon]?.name || addon);
         const addonText = addonNames.length > 0 ? `Добавки: ${addonNames.join(', ')}` : '';
         const addonPrice = Object.keys(itemAddons)
             .filter(addon => itemAddons[addon])
-            .reduce((sum, addon) => sum + (addons[addon]?.price || 0), 0);
+            .reduce((sum, addon) => sum + (addonsObj[addon]?.price || 0), 0);
         const totalPrice = (item.price + addonPrice) * qty;
         totalCartPrice += totalPrice;
 
@@ -247,11 +279,11 @@ function showPayment(totalQuantity, totalPrice, orderedItems) {
         div.className = 'payment__item';
         const addonNames = Object.keys(itemAddons)
             .filter(addon => itemAddons[addon])
-            .map(addon => addons[addon]?.name || addon);
+            .map(addon => addonsObj[addon]?.name || addon);
         const addonText = addonNames.length > 0 ? `<div class="payment__item-addons">Добавки: ${addonNames.join(', ')}</div>` : '';
         const addonPrice = Object.keys(itemAddons)
             .filter(addon => itemAddons[addon])
-            .reduce((acc, addon) => acc + (addons[addon]?.price || 0), 0);
+            .reduce((acc, addon) => acc + (addonsObj[addon]?.price || 0), 0);
         const itemTotalPrice = (item.price + addonPrice) * qty;
         div.innerHTML = `
             ${item.name} x${qty} ${addonText}
@@ -289,9 +321,11 @@ function handleMenuButtonClick(e) {
         cart[variationId].qty += 1;
         saveCart();
         updateCartBadge();
-        itemAddonStates[id] = { chocolateSyrup: false, pistachioMilk: false, nonLactoseCream: false };
+        itemAddonStates[id] = addons.reduce((acc, addon) => {
+              acc[addon.id] = false;
+              return acc;
+            }, {});;
         addonButtons.forEach(btn => btn.classList.remove('menu__btn-addon--active'));
-        selectedAddons.textContent = '';
         renderMenu();
     } else if (target.classList.contains('menu__btn-order')) {
         cart = {};
@@ -305,7 +339,8 @@ function handleMenuButtonClick(e) {
         }
         const addonPrice = Object.keys(currentAddons)
             .filter(addon => currentAddons[addon])
-            .reduce((sum, addon) => sum + (addons[addon]?.price || 0), 0);
+            .reduce((sum, addon) => sum + (addonsObj[addon]?.price || 0), 0);
+        console.log(addonPrice)
         lastOrder = [{ item, qty: 1, addons: { ...currentAddons } }];
         showPayment(1, item.price + addonPrice, lastOrder);
         cart = {};
@@ -340,7 +375,7 @@ function handleCartOrderClick() {
         }
         const addonPrice = Object.keys(itemAddons)
             .filter(addon => itemAddons[addon])
-            .reduce((sum, addon) => sum + (addons[addon]?.price || 0), 0);
+            .reduce((sum, addon) => sum + (addonsObj[addon]?.price || 0), 0);
         return acc + (item.price + addonPrice) * qty;
     }, 0);
 
@@ -397,7 +432,7 @@ async function submitOrder() {
         if (!item) return acc;
         const addonPrice = Object.keys(itemAddons)
             .filter(addon => itemAddons[addon])
-            .reduce((sum, addon) => sum + (addons[addon]?.price || 0), 0);
+            .reduce((sum, addon) => sum + (addonsObj[addon]?.price || 0), 0);
         return acc + (item.price + addonPrice) * qty;
     }, 0);
     const randomSequence = generateRandomSequence();
@@ -414,6 +449,7 @@ async function init() {
     loadCart();
     updateCartBadge();
     await fetchMenu(); // Fetch and update menuItems globally
+    await fetchAddons()
     renderMenu();
     menuList.addEventListener('click', (e) => handleMenuButtonClick(e));
     snackList.addEventListener('click', (e) => handleMenuButtonClick(e));
