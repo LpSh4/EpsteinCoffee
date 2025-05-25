@@ -16,13 +16,6 @@ async function fetchMenu() {
     }
 }
 
-const addons = {
-    chocolateSyrup: { name: 'Шоколадный сироп', price: 85 },
-    pistachioMilk: { name: 'Фисташковое молоко', price: 85 },
-    nonLactoseCream: { name: 'Безлактозные сливки', price: 85 },
-    pineappleSyrup: {name: 'Ананасовый сироп', price: 52}
-};
-
 let cart = {};
 let lastOrder = null;
 
