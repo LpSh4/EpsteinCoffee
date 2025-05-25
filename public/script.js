@@ -444,7 +444,6 @@ async function submitOrder() {
 }
 
 async function init() {
-    btnLookMenu.style.display = 'none'
     cartIcon.style.display = 'none'
     navLinks.forEach(item => {
         item.style.display = 'none'
