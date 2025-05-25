@@ -18,7 +18,8 @@ async function fetchMenu() {
 const addons = {
     chocolateSyrup: { name: 'Шоколадный сироп', price: 85 },
     pistachioMilk: { name: 'Фисташковое молоко', price: 85 },
-    nonLactoseCream: { name: 'Безлактозные сливки', price: 85 }
+    nonLactoseCream: { name: 'Безлактозные сливки', price: 85 },
+    pineappleSyrup: {name: 'Ананасовый сироп', price: 52}
 };
 
 let cart = {};
@@ -53,7 +54,7 @@ function renderMenu() {
     const itemAddonStates = {};
     menuItemsCut.forEach(item => {
         if (!itemAddonStates[item.id]) {
-            itemAddonStates[item.id] = { chocolateSyrup: false, pistachioMilk: false, nonLactoseCream: false };
+            itemAddonStates[item.id] = { chocolateSyrup: false, pistachioMilk: false, nonLactoseCream: false, pineappleSyrup: false };
         }
     });
 
@@ -71,6 +72,7 @@ function renderMenu() {
                 <button class="menu__btn-addon" data-id="${item.id}" data-addon="chocolateSyrup" aria-label="Добавить ${addons.chocolateSyrup.name} к ${item.name}">+ ${addons.chocolateSyrup.name}</button>
                 <button class="menu__btn-addon" data-id="${item.id}" data-addon="pistachioMilk" aria-label="Добавить ${addons.pistachioMilk.name} к ${item.name}">+ ${addons.pistachioMilk.name}</button>
                 <button class="menu__btn-addon" data-id="${item.id}" data-addon="nonLactoseCream" aria-label="Добавить ${addons.nonLactoseCream.name} к ${item.name}">+ ${addons.nonLactoseCream.name}</button>
+                <button class="menu__btn-addon" data-id="${item.id}" data-addon="pineappleSyrup" aria-label="Добавить ${addons.pineappleSyrup.name} к ${item.name}">+ ${addons.pineappleSyrup.name}</button>
             </div>
             <div class="menu__item-selected-addons" data-id="${item.id}"></div>
         `;

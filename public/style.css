@@ -311,6 +311,7 @@
   .cart__item-addons {
     font-size: 0.9rem;
     color: #6b4f4f;
+    max-width: 550px;
   }
   .cart__item-qty {
     color: #6b4f4f;
