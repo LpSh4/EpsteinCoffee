@@ -27,8 +27,6 @@ async function fetchAddons(){
         addonsObj = Object.fromEntries(
         addons.map(a => [a.id, { name: a.name, price: a.price }])
         );
-
-        console.log(addons)
         return addons
     } catch (error) {
         console.error('Error fetching addons: ', error);
@@ -446,10 +444,24 @@ async function submitOrder() {
 }
 
 async function init() {
-    loadCart();
-    updateCartBadge();
+    btnLookMenu.style.display = 'none'
+    cartIcon.style.display = 'none'
+    navLinks.forEach(item => {
+        item.style.display = 'none'
+    });
     await fetchMenu(); // Fetch and update menuItems globally
     await fetchAddons()
+    document.getElementById('home__title').textContent=`CoffeeLike`
+    btnLookMenu.style.display = ''
+    cartIcon.style.display = ''
+    cartIcon.classList.add('fade-in-top')
+    btnLookMenu.classList.add('fade-in-top');
+    navLinks.forEach(item => {
+        item.style.display = ''
+        item.classList.add('fade-in-top');
+    });
+    loadCart();
+    updateCartBadge();
     renderMenu();
     menuList.addEventListener('click', (e) => handleMenuButtonClick(e));
     snackList.addEventListener('click', (e) => handleMenuButtonClick(e));
